@@ -29,6 +29,6 @@ setup(
     packages=["datasette_redirect_to_https"],
     entry_points={"datasette": ["redirect_to_https = datasette_redirect_to_https"]},
     install_requires=["datasette"],
-    extras_require={"test": ["pytest", "pytest-asyncio"]},
+    extras_require={"test": ["pytest", "pytest-asyncio", "asgi-lifespan"]},
     python_requires=">=3.6",
 )

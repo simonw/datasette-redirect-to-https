@@ -1,3 +1,4 @@
+from asgi_lifespan import LifespanManager
 from datasette.app import Datasette
 import httpx
 import pytest
@@ -17,8 +18,9 @@ async def test_http_get_redirects_to_https(path):
 @pytest.mark.parametrize("path", ["/", "/-/versions", "/-/versions.json"])
 async def test_https_get_does_not_redirect(path):
     datasette = Datasette([], memory=True)
-    async with httpx.AsyncClient(app=datasette.app()) as client:
-        response = await client.get("https://localhost{}".format(path))
+    async with LifespanManager(datasette.app()):
+        async with httpx.AsyncClient(app=datasette.app()) as client:
+            response = await client.get("https://localhost{}".format(path))
     assert response.status_code == 200
     assert response.text
 

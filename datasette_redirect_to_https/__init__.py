@@ -8,6 +8,8 @@ def asgi_wrapper(datasette):
     def wrap_with_redirect_to_https(app):
         @wraps(app)
         async def redirect_to_https(scope, receive, send):
+            if scope.get("type") != "http" or "scheme" not in scope:
+                return await app(scope, receive, send)
             if scope["scheme"] == "http":
                 url = b"https://" + dict(scope["headers"])[b"host"]
                 if scope.get("raw_path"):
