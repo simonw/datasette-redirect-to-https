@@ -15,7 +15,9 @@ Install this plugin in the same environment as Datasette.
 
 ## Usage
 
-Usage instructions go here.
+Once installed, incoming GET requests to the `http://` protocol will be 301 redirected to the `https://` equivalent page.
+
+HTTP verbs other than GET will get a 405 Method Not Allowed HTTP error.
 
 ## Development
 
