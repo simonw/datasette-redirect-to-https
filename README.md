@@ -19,17 +19,38 @@ Once installed, incoming GET requests to the `http://` protocol will be 301 redi
 
 HTTP verbs other than GET will get a 405 Method Not Allowed HTTP error.
 
+## Configuration
+
+Some hosting providers handle HTTPS for you, passing requests back to your application server over HTTP.
+
+For this plugin to work correctly, you need to detect that they the original incoming request came in over HTTP.
+
+Hosting providers like this often set an additional HTTP header such as `x-forwarded-proto: http` to let you know the original protocol.
+
+You can configure `datasette-redirect-to-https` to respect this header using the following plugin configuration in `metadata.json`:
+
+```json
+{
+  "plugins": {
+    "datasette-redirect-to-https": {
+      "if_headers": {
+        "x-forwarded-proto": "http"
+      }
+    }
+  }
+}
+```
+The above example will redirect to `https://` if the incoming request has a `x-forwarded-proto: http` request header.
+
+If multiple `if_headers` are listed, the redirect will occur if any of them match.
+
 ## Development
 
 To set up this plugin locally, first checkout the code. Then create a new virtual environment:
 
     cd datasette-redirect-to-https
-    python3 -mvenv venv
+    python3 -m venv venv
     source venv/bin/activate
-
-Or if you are using `pipenv`:
-
-    pipenv shell
 
 Now install the dependencies and test dependencies:
 
