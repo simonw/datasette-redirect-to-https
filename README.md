@@ -23,9 +23,9 @@ HTTP verbs other than GET will get a 405 Method Not Allowed HTTP error.
 
 Some hosting providers handle HTTPS for you, passing requests back to your application server over HTTP.
 
-For this plugin to work correctly, you need to detect that they the original incoming request came in over HTTP.
+For this plugin to work correctly, it needs to detect that the original incoming request came in over HTTP.
 
-Hosting providers like this often set an additional HTTP header such as `x-forwarded-proto: http` to let you know the original protocol.
+Hosting providers like this often set an additional HTTP header such as `x-forwarded-proto: http` identifying the original protocol.
 
 You can configure `datasette-redirect-to-https` to respect this header using the following plugin configuration in `metadata.json`:
 
